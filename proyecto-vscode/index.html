@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>StudyFlow - Laboratorio de pruebas</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="hero">
+    <div class="hero__contenido">
+      <p class="etiqueta">Semana 12 · Unidad 2</p>
+      <h1>StudyFlow: laboratorio de pruebas de interacción</h1>
+      <p>
+        Aplicación web para practicar diseño y ejecución de pruebas,
+        casos de prueba, escenarios de uso y verificación de interacción.
+      </p>
+    </div>
+  </header>
+
+  <main class="contenedor">
+    <section class="panel" aria-labelledby="titulo-formulario">
+      <h2 id="titulo-formulario">Registrar tarea</h2>
+      <p class="ayuda">
+        Complete los campos y agregue una tarea. Luego pruebe los botones,
+        mensajes, filtros y contadores.
+      </p>
+
+      <form id="formTareas" class="formulario" novalidate>
+        <div class="campo">
+          <label for="nombreTarea">Nombre de la tarea</label>
+          <input
+            id="nombreTarea"
+            type="text"
+            placeholder="Ejemplo: Repasar JavaScript"
+          />
+          <small id="errorNombre" class="error" aria-live="polite"></small>
+        </div>
+
+        <div class="campo">
+          <label for="asignatura">Asignatura</label>
+          <select id="asignatura">
+            <option value="">Seleccione una asignatura</option>
+            <option value="Software">Software</option>
+            <option value="Matemáticas">Matemáticas</option>
+            <option value="Inglés">Inglés</option>
+            <option value="Emprendimiento">Emprendimiento</option>
+          </select>
+          <small id="errorAsignatura" class="error" aria-live="polite"></small>
+        </div>
+
+        <div class="campo">
+          <label for="fechaEntrega">Fecha de entrega</label>
+          <input id="fechaEntrega" type="date" />
+          <small id="errorFecha" class="error" aria-live="polite"></small>
+        </div>
+
+        <div class="campo">
+          <label for="prioridad">Prioridad</label>
+          <select id="prioridad">
+            <option value="">Seleccione una prioridad</option>
+            <option value="Alta">Alta</option>
+            <option value="Media">Media</option>
+            <option value="Baja">Baja</option>
+          </select>
+          <small id="errorPrioridad" class="error" aria-live="polite"></small>
+        </div>
+
+        <div class="acciones">
+          <button id="btnAgregar" type="submit" class="boton principal">
+            Agregar tarea
+          </button>
+          <button id="btnLimpiarFormulario" type="button" class="boton secundario">
+            Limpiar formulario
+          </button>
+        </div>
+
+        <p id="mensajeGeneral" class="mensaje" aria-live="polite"></p>
+      </form>
+    </section>
+
+    <section class="panel" aria-labelledby="titulo-resumen">
+      <h2 id="titulo-resumen">Resumen</h2>
+      <div class="resumen">
+        <article>
+          <span id="totalTareas">0</span>
+          <p>Total</p>
+        </article>
+        <article>
+          <span id="totalPendientes">0</span>
+          <p>Pendientes</p>
+        </article>
+        <article>
+          <span id="totalCompletadas">0</span>
+          <p>Completadas</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="panel" aria-labelledby="titulo-lista">
+      <div class="fila-superior">
+        <div>
+          <h2 id="titulo-lista">Lista de tareas</h2>
+          <p class="ayuda">Use los filtros y verifique si la lista cambia correctamente.</p>
+        </div>
+
+        <div class="filtros" aria-label="Filtros de tareas">
+          <button class="boton filtro activo" type="button" data-filtro="todas">
+            Todas
+          </button>
+          <button class="boton filtro" type="button" data-filtro="pendientes">
+            Pendientes
+          </button>
+          <button class="boton filtro" type="button" data-filtro="completadas">
+            Completadas
+          </button>
+        </div>
+      </div>
+
+      <ul id="listaTareas" class="lista"></ul>
+
+      <button id="btnLimpiarCompletadas" type="button" class="boton peligro">
+        Limpiar completadas
+      </button>
+    </section>
+  </main>
+
+  <footer class="pie">
+    <p>Laboratorio de pruebas · VS Code · HTML, CSS y JavaScript</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+# Ignorar todo por defecto
+*
+
+# Permitir solo la carpeta del proyecto que se va a subir
+!proyecto-vscode/
+!proyecto-vscode/**
+
+# Permitir este mismo archivo .gitignore
+!.gitignore
+
+# Opcional: permitir README si luego creas uno
+!README.md
