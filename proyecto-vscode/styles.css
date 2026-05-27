@@ -256,3 +256,15 @@ select:focus {
     width: 100%;
   }
 }
+
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  border: 1px solid #dbe3ef;
+  padding: 8px;
+  text-align: left;
+}

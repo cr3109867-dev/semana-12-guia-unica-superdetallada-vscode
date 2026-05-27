@@ -21,8 +21,7 @@
 // =====================================================
 
 // Este selector se usa para capturar el formulario.
-const formulario = document.querySelector("#formularioTareas");
-
+const formulario = document.querySelector("#formTareas");
 const nombreTarea = document.querySelector("#nombreTarea");
 const asignatura = document.querySelector("#asignatura");
 const fechaEntrega = document.querySelector("#fechaEntrega");
@@ -100,7 +99,7 @@ botonesFiltro.forEach(function (boton) {
 function formularioEsValido() {
   let esValido = true;
 
-  if (nombreTarea.value === "") {
+  if (nombreTarea.value.trim()  === "") {
     errorNombre.textContent = "Escribe el nombre de la tarea.";
     esValido = false;
   }
@@ -110,16 +109,19 @@ function formularioEsValido() {
     esValido = false;
   }
 
-  if (fechaEntrega.value === "") {
-    errorFecha.textContent = "Selecciona una fecha de entrega.";
+
+
+if (fechaEntrega.value === "") {
+  errorFecha.textContent = "Selecciona una fecha de entrega.";
+  esValido = false;
+} else {
+  const hoy = obtenerFechaHoy();   // aquí defines la variable
+  if (fechaEntrega.value < hoy) {  // usa < en vez de <=
+    errorFecha.textContent = "La fecha no puede ser anterior a hoy.";
     esValido = false;
-  } else {
-    const hoy = obtenerFechaHoy();
-    if (fechaEntrega.value <= hoy) {
-      errorFecha.textContent = "La fecha no puede ser anterior a hoy.";
-      esValido = false;
-    }
   }
+}
+
 
   return esValido;
 }
@@ -161,36 +163,36 @@ function dibujarTareas() {
   const tareasFiltradas = obtenerTareasFiltradas();
 
   if (tareasFiltradas.length === 0) {
-    listaTareas.innerHTML = "<li class='tarea'>No hay tareas para mostrar.</li>";
+    listaTareas.innerHTML = `
+      <tr>
+        <td colspan="5">No hay tareas para mostrar.</td>
+      </tr>`;
     return;
   }
 
   tareasFiltradas.forEach(function (tarea, indice) {
-    const item = document.createElement("li");
-    item.className = tarea.completada ? "tarea completada" : "tarea";
+    const fila = document.createElement("tr");
+    fila.className = tarea.completada ? "tarea completada" : "tarea";
 
-    item.innerHTML = `
-      <div>
-        <h3 class="tarea__titulo">${tarea.nombre}</h3>
-        <p class="tarea__meta">
-          Asignatura: ${tarea.asignatura} ·
-          Fecha: ${tarea.fecha} ·
-          Prioridad: ${tarea.prioridad || "Sin prioridad"}
-        </p>
-      </div>
-      <div class="tarea__acciones">
+    fila.innerHTML = `
+      <td>${tarea.nombre}</td>
+      <td>${tarea.asignatura}</td>
+      <td>${tarea.fecha}</td>
+      <td>${tarea.prioridad || "Sin prioridad"}</td>
+      <td>
         <button class="boton secundario" type="button" onclick="cambiarEstado(${tarea.id})">
           ${tarea.completada ? "Marcar pendiente" : "Completar"}
         </button>
         <button class="boton peligro" type="button" onclick="eliminarTarea(${indice})">
           Eliminar
         </button>
-      </div>
+      </td>
     `;
 
-    listaTareas.appendChild(item);
+    listaTareas.appendChild(fila);
   });
 }
+
 
 // =====================================================
 // 7. COMPLETAR, ELIMINAR Y FILTRAR
@@ -202,15 +204,15 @@ function cambiarEstado(id) {
   });
 
   if (tarea) {
-    tarea.completada = true;
+    tarea.completada = !tarea.completada;
     dibujarTareas();
     actualizarContadores();
   }
 }
 
 function eliminarTarea(indice) {
-  tareas.splice(indice + 1, 1);
-  dibujarTareas();
+ tareas.splice(indice, 1);
+
   actualizarContadores();
   mostrarMensaje("Tarea eliminada.", "exito");
 }
@@ -243,9 +245,10 @@ function actualizarContadores() {
   const pendientes = tareas.length - completadas;
 
   totalTareas.textContent = tareas.length;
-  totalPendientes.textContent = completadas;
-  totalCompletadas.textContent = pendientes;
+  totalPendientes.textContent = pendientes;
+  totalCompletadas.textContent = completadas;
 }
+
 
 function limpiarErrores() {
   errorNombre.textContent = "";
